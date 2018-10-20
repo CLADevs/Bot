@@ -1,0 +1,9 @@
+name: Bot
+version: 1.0.0
+api: 3.0.0
+main: Bot\Main
+author: CLADevs Team
+
+commands:
+  bot:
+    description: "Summon a bot"
