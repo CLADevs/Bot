@@ -2,63 +2,57 @@
 
 declare(strict_types=1);
 
-namespace Bot\tasks;
+namespace Bot;
 
 use pocketmine\scheduler\Task;
-
-use Bot\{
-	Bot, Main
-};
 
 class NPCTask extends Task{
 
 	/** @var string $type */
 	private $type;
 
-	/** @var Bot $entity */
+	/** @var BotEntity $entity */
 	private $entity;
 
-	public function __construct(string $type, Bot $entity){
+	public function __construct(string $type, BotEntity $entity){
 		$this->type = $type;
 		$this->entity = $entity;
 	}
 
-	public function onRun(int $tick): void{
+	public function onRun(int $tick) : void{
 		$type = $this->getType();
 		$entity = $this->getEntity();
-		$names = Main::get()->getConfig()->get("nametags");
+		$names = Main::getInstance()->getConfig()->get("nametags");
 		$actions = ["sneak", "unsneak", "jump"];
 		$randaction = $actions[array_rand($actions)];
-
 		switch($type){
 			case "start":
-			$this->StartTask($randaction, 20);
-			break;
+				$this->startTask($randaction, 20);
+				break;
 			case "sneak":
-			$this->Sneak();
-			break;
+				$this->sneak();
+				break;
 			case "unsneak":
-			$this->Sneak();
-			break;
+				$this->sneak();
+				break;
 			case "jump":
-			$entity->jump();
-			break;
+				$entity->jump();
+				break;
 		}
-
 		$entity->setNameTag($names[array_rand($names)]);
 		$entity->spawnToAll();
-		if($this->type !== "start") $this->StartTask("start", 20);
+		if($this->type !== "start") $this->startTask("start", 20);
 	}
 
-	public function getEntity(): Bot{
+	private function getEntity() : BotEntity{
 		return $this->entity;
 	}
 
-	public function getType(): string{
+	private function getType() : string{
 		return $this->type;
 	}
 
-	public function Sneak(): void{
+	private function sneak() : void{
 		if($this->getEntity()->isSneaking()){
 			$this->getEntity()->setSneaking(false);
 		}else{
@@ -66,7 +60,7 @@ class NPCTask extends Task{
 		}
 	}
 
-	public function StartTask(string $type, int $tick){
-		Main::get()->getScheduler()->scheduleDelayedTask(new NPCTask($type, $this->getEntity()), $tick);
+	private function startTask(string $type, int $tick){
+		Main::getInstance()->getScheduler()->scheduleDelayedTask(new NPCTask($type, $this->getEntity()), $tick);
 	}
 }
