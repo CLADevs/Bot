@@ -55,6 +55,6 @@ class Main extends PluginBase implements Listener{
 
 	public function onEntitySpawn(EntitySpawnEvent $event) : void{
 		$entity = $event->getEntity();
-		if($entity instanceof BotEntity) Main::getInstance()->getScheduler()->scheduleDelayedTask(new NPCTask("start", $entity), 20);
+		if($entity instanceof BotEntity) $this->getScheduler()->scheduleDelayedTask(new NPCTask("start", $entity), 20);
 	}
 }
