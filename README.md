@@ -6,6 +6,7 @@
  - [x] Jump
  - [x] Sneak/Unsneak
  - [x] Nametags
+ - [x] Spin
 
  ## Need Help?
   Open an Issue [here](https://github.com/CLADevs/Bot/issues/new).

@@ -1,5 +1,7 @@
 ---
-#Nametags are NPC Names
+# Spin on or off
+spin: "on"
+# Nametags are NPC Names
 nametags:
   - Aye
   - BotEntity
